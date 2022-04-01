@@ -622,6 +622,7 @@ describe('Deploy CloudFormation Stack', () => {
     })
     expect(mockExecuteChangeSet).toHaveBeenNthCalledWith(1, {
       ChangeSetName: 'MockStack-CS',
+      DisableRollback: false,
       StackName: 'MockStack'
     })
     expect(mockCfnWaiter).toHaveBeenCalledTimes(2)

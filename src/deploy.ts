@@ -56,7 +56,8 @@ export async function updateStack(
   params: CreateChangeSetInput,
   noEmptyChangeSet: boolean,
   noExecuteChageSet: boolean,
-  noDeleteFailedChangeSet: boolean
+  noDeleteFailedChangeSet: boolean,
+  disableRollback: boolean
 ): Promise<string | undefined> {
   core.debug('Creating CloudFormation Change Set')
   await cfn.createChangeSet(params).promise()
@@ -88,7 +89,8 @@ export async function updateStack(
   await cfn
     .executeChangeSet({
       ChangeSetName: params.ChangeSetName,
-      StackName: params.StackName
+      StackName: params.StackName,
+      DisableRollback: disableRollback
     })
     .promise()
 
@@ -159,7 +161,8 @@ export async function deployStack(
     },
     noEmptyChangeSet,
     noExecuteChageSet,
-    noDeleteFailedChangeSet
+    noDeleteFailedChangeSet,
+    params.DisableRollback || false
   )
 }
 
